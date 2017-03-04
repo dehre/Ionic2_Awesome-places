@@ -5,7 +5,10 @@ import {
   LoadingController,
   ToastController
 } from "ionic-angular";
-import { Geolocation } from "ionic-native";
+import {
+  Geolocation,
+  Camera
+} from "ionic-native";
 import { Location } from "../../models/location";
 import { SetLocationPage } from "../set-location/set-location";
 
@@ -68,7 +71,16 @@ export class AddPlacePage {
     );
   }
 
-  onTakePhoto(){}
+  onTakePhoto(){
+    Camera.getPicture({
+      encodingType: Camera.EncodingType.JPEG,
+      correctOrientation: true
+    })
+      .then(imageData=>{
+        console.log(imageData)
+      })
+      .catch(err=>console.log(err))
+  }
 
   onSubmit(form:NgForm){
     console.log(form.value);
