@@ -1,8 +1,16 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Awesome Places
     </ion-title>
+    <ion-buttons end>
+      <button
+        [navPush]="addPlacePage"
+        ion-button
+        icon-only>
+          <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
