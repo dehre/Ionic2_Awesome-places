@@ -20,18 +20,19 @@ export class SetLocationPage {
     private viewCtrl:ViewController
   ){
     this.location = this.navParams.get('location');
-  }
-
-  onSetMarker(event:any){
-    // this.marker = new Location(event.coords.lat,event.coords.lng);
-    this.marker = {
-      lat:event.coords.lat,
-      lng:event.coords.lng
+    if(this.navParams.get('isSet')){
+      this.marker = this.location;
     }
   }
 
+  onSetMarker(event:any){
+    this.marker = new Location(event.coords.lat,event.coords.lng);
+  }
+
   onConfirm(){
-    this.viewCtrl.dismiss({location: this.marker});
+    this.viewCtrl.dismiss({
+      location:this.marker
+    });
   }
 
   onAbort(){
