@@ -11,6 +11,7 @@ import {
 } from "ionic-native";
 import { Location } from "../../models/location";
 import { SetLocationPage } from "../set-location/set-location";
+import { PlacesService } from "../../services/places.service";
 
 @Component({
   selector: 'page-add-place',
@@ -23,11 +24,13 @@ export class AddPlacePage {
     lng: 11.9168145
   };
   locationIsSet:boolean = false;
+  imageUrl:string = "https://www.w3schools.com/css/img_fjords.jpg";
 
   constructor(
     private modalCtrl:ModalController,
     private loadingCtrl:LoadingController,
-    private toastCtrl:ToastController
+    private toastCtrl:ToastController,
+    private placesService:PlacesService
   ){}
 
   onLocate(){
@@ -77,13 +80,28 @@ export class AddPlacePage {
       correctOrientation: true
     })
       .then(imageData=>{
-        console.log(imageData)
+        this.imageUrl = imageData;
       })
-      .catch(err=>console.log(err))
+      .catch(err=>{
+        console.log(err)
+      })
   }
 
   onSubmit(form:NgForm){
-    console.log(form.value);
+    let place = form.value;
+    this.placesService.addPlace(
+      place.title,
+      place.description,
+      this.location,
+      this.imageUrl
+    );
+    form.reset();
+    this.location = {
+      lat: 45.7896645,
+      lng: 11.9168145
+    };
+    this.locationIsSet = false;
+    this.imageUrl = "";
   }
 
 }

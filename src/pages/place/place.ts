@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { Place } from "../../models/place";
+import { PlacesService } from "../../services/places.service";
 
 @Component({
   selector: 'page-place',
@@ -7,10 +9,26 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class PlacePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  place:Place;
+  index:number;
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PlacePage');
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private viewCtrl:ViewController,
+    private placesService:PlacesService
+  ){
+    this.place = this.navParams.get('place');
+    this.index = this.navParams.get('index')
+  }
+
+  onLeave(){
+    this.viewCtrl.dismiss();
+  }
+
+  onDelete(){
+    this.placesService.deletePlace(this.index);
+    this.onLeave();
   }
 
 }
